@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проект от S1nvi</title>
+    <style>
+
+<div id="imageContainer">
+    <button class="overlay-button" id="button1">Играть</button>
+    <button class="overlay-button" id="button2">Настройки</button>
+</div>
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            position: relative;
+        }
+
+        #myImage {
+           position: absolute; /* Убедитесь, что позиционирование установлено на absolute */
+           top: 30%; /* Центрируем по вертикали */
+           left: 65%; /* Центрируем по горизонтали */
+           width: 30vw; /* 30% от ширины вьюпорта */
+           height: auto; /* Сохраняем пропорции */
+           cursor: pointer; /* Изменяем курсор на указатель при наведении */
+           border: 2px solid #ccc; /* Добавляем рамку для изображения */
+           border-radius: 10px; /* Закругляем углы */
+           transition: transform 0.2s; /* Добавляем эффект увеличения при наведении */
+           transform: translate(-50%, -50%); /* Смещаем изображение на половину его ширины и высоты */
+        }
+
+        #myImage:hover {
+            transform: translate(-50%, -50%) scale(1.1); /* Центрируем и увеличиваем изображение при наведении */
+        }
+        #fullScreenImage {
+            display: none; /* Скрываем полноэкранное изображение по умолчанию */
+            position: fixed;
+            top: 50%; /* Центрируем по вертикали */
+            left: 50%; /* Центрируем по горизонтали */
+            width: 50%; /* Ширина изображения */
+            height: 50%; /* Высота изображения */
+            object-fit: cover; /* Обеспечиваем сохранение пропорций */
+            z-index: 10; /* Устанавливаем на передний план */
+            cursor: pointer; /* Изменяем курсор на указатель при наведении */
+            transform: translate(-50%, -50%); /* Сдвигаем элемент на 50% его ширины и высоты */
+        }
+        .overlay-button {
+            position: absolute; /* Абсолютное позиционирование для кнопок */
+            padding: 10px 20px; /* Отступы для кнопок */
+            background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+            border: none; /* Убираем рамку */
+            border-radius: 5px; /* Скругленные углы */
+            cursor: pointer; /* Указатель при наведении */
+            display: block; /* Скрываем кнопки по умолчанию */
+        }
+
+        #newImage {
+           display: none; 
+           position: fixed; /* Изменено на fixed для центрирования */
+           top: 50%; 
+           left: 50%; 
+           width: 50%; /* Ширина изображения */
+           height: auto; /* Сохраняем пропорции */
+           object-fit: cover; /* Обеспечиваем сохранение пропорций */
+           transform: translate(-50%, -50%); /* Центрируем изображение */
+           z-index: 10; /* Устанавливаем на передний план */
+        }
+
+ 
+        /* Пример позиционирования кнопок */
+        #button1 {
+            top: 33%; /* Позиция кнопки 1 */
+            left: 54%; /* Позиция кнопки 1 */
+        }
+
+        #button2 {
+            bottom: 45.5%; /* Позиция кнопки 2 */
+            right: 40%; /* Позиция кнопки 2 */
+        }
+
+    </style>
+    <script>
+    function showFullScreenImage(imageId) {
+        const fullScreenImg = document.getElementById('fullScreenImage');
+        const buttons = document.querySelectorAll('.overlay-button');
+
+    // Устанавливаем источник изображения для полноэкранного режима
+        fullScreenImg.src = imageId; 
+        fullScreenImg.style.display = 'block'; // Показываем полноэкранное изображение
+        buttons.forEach(button => button.style.display = 'block'); // Показываем кнопки
+    }
+
+    function hideFullScreenImage() {
+        const fullScreenImg = document.getElementById('fullScreenImage');
+        const buttons = document.querySelectorAll('.overlay-button');
+        fullScreenImg.style.display = 'none'; // Скрываем полноэкранное изображение
+        buttons.forEach(button => button.style.display = 'none'); // Скрываем кнопки
+    }
+
+// Закрытие полноэкранного изображения при нажатии клавиши ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            hideFullScreenImage();
+        }
+});
+
+// Обработчики событий для кнопок
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('button1').addEventListener('click', function() {
+        showFullScreenImage('https://yandex.ru/images/search?family=yes&from=tabbar&img_url=https%3A%2F%2Fclipart-library.com%2Fimages%2FpiqrbB8dT.jpg&lr=194&pos=5&rpt=simage&text=%D1%81%D0%B0%D0%BC%D0%BE%D0%BB%D0%B5%D1%82'); // Замените на путь к вашему изображению 2
+    });
+    document.getElementById('button2').addEventListener('click', function() {
+        showFullScreenImage('https://yandex.ru/images/search?family=yes&from=tabbar&img_url=https%3A%2F%2Fclipart-library.com%2Fimages%2FpiqrbB8dT.jpg&lr=194&pos=5&rpt=simage&text=%D1%81%D0%B0%D0%BC%D0%BE%D0%BB%D0%B5%D1%82'); // Замените на путь к вашему изображению 3
+    });
+});
+
+    function handleButtonClick() {
+        // Скрыть все изображения
+        const images = document.querySelectorAll("img");
+        images.forEach(img => img.style.display = "none");
+
+    // Отобразить новое изображение
+        document.getElementById("newImage").style.display = "block";
+
+       const buttons = document.querySelectorAll("button");
+       buttons.forEach(button => button.style.display = "none");
+   }
+
+</script>
+</head>
+<body>
+
+    <img id="myImage" src="https://overclockers.ru/st/legacy/blog/370824/119347_O.jpg" alt="Первое изображение" onclick="showFullScreenImage('https://v-kurse.ru/wp-content/uploads/2021/11/airplane-fly-through-clouds-8k-n8-1600x1200-1.jpg')">
+    <img id="fullScreenImage" src="https://f.azh.kz/news-eng/1959.jpg" alt="Полноэкранное изображение" onclick="hideFullScreenImage()">
+    <img id="newImage" src="https://avatars.mds.yandex.net/i?id=11e5bf28cf2365b93045c689069fb4a9_sr-4841525-images-thumbs&n=13" style="display: none;" alt="Вторая картинка">
+    <img id="anotherImage" src="C:/Users/Ученик 21/Desktop/пятОК/тест сайт и сервер/сайт/жмых/Крякукс (не удалять).png" alt="Другое изображение">
+</body>
+
+<div id="imageContainer">
+    <button class="overlay-button" id="button1">Играть</button>
+    <button class="overlay-button" id="button2">Настройки</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('button1').addEventListener('click', function() {
+        // Замените на актуальный URL изображения
+        showFullScreenImage('https://i.pinimg.com/736x/f3/db/53/f3db53899b79af2713bf134a6f7a0818.jpg'); 
+    });
+
+    document.getElementById('button2').addEventListener('click', function() {
+        document.getElementById('anotherImage').style.display = 'none';
+    });
+
+    // Показываем кнопки
+    const buttons = document.querySelectorAll('.overlay-button');
+    buttons.forEach(button => button.style.display = 'block');
+});
+
+
+</script>
+
+</body>
+</html>
